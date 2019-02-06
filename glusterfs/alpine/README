@@ -1,0 +1,5 @@
+# Build
+docker build . -t glusterfs:5.3-alpine3.8
+
+# Run
+docker run --rm -it glusterfs:5.3-alpine3.8 sh
