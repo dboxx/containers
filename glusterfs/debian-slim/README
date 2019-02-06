@@ -1,0 +1,6 @@
+# Build
+docker build . -t glusterfs:5-debian9.6-slim
+
+# Run
+docker run --rm -it glusterfs:5-debian9.6-slim bash
+
