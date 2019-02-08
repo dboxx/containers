@@ -4,24 +4,24 @@
 
 Run glusterd
 ```
- > glusterd
+glusterd
 ```
 
 Create some directory for gluster volume
 ```
- > mkdir /tmp/test-vol
+mkdir /tmp/test-vol
 ```
 
 Create and start gluster volume
 ```
- > gluster volume create test-vol 172.17.0.2:/tmp/test-vol
- > gluster volume start test-vol
+gluster volume create test-vol 172.17.0.2:/tmp/test-vol
+gluster volume start test-vol
 ```
 
 Check this volume in gluster
 ```
- > gluster volume list
- > gluster volume info test-vol
+gluster volume list
+gluster volume info test-vol
 ```
 
 Create some directory for mount
