@@ -31,7 +31,7 @@ mkdir /tmp/test-mnt
 
 Mount test-vol to this directory
 ```
-mount -t glusterfs 172.17.0.2:/tmp/test-vol /tmp/test-mnt
+mount -t glusterfs 172.17.0.2:test-vol /tmp/test-mnt
 ```
 
 Test this volume
