@@ -1,5 +1,5 @@
 IMAGE = dboxx/glusterfs
-TAG = 5.3
+TAG = v5.3
 
 # Colors
 COLNO=\033[0m
