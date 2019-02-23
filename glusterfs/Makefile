@@ -1,5 +1,6 @@
-IMAGE = dboxx/glusterfs
 TAG = v5.3
+NAME = glusterfs
+IMAGE = dboxx/glusterfs
 
 # Colors
 COLNO=\033[0m
@@ -13,7 +14,7 @@ help:   ## show list
 	@echo "Git: https://github.com/dboxx/containers"
 	@echo "Hub: https://hub.docker.com/r/$(IMAGE)"
 	@echo " > docker pull $(IMAGE)"
-	@echo " > docker run --name glusterfs --privileged --rm -v /tmp:/tmp:rw -it $(IMAGE) bash"
+	@echo " > docker run --name $(NAME) --privileged --rm -v /tmp:/tmp:rw -it $(IMAGE) bash"
 	@echo "-----"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "$(COLMENU)%-10s$(COLNO) %s\n", $$1, $$2}'
 
@@ -24,7 +25,7 @@ push:   ## push image
 	@docker push $(IMAGE):$(TAG)
 
 run:    ## run image
-	@docker run --name glusterfs --privileged --rm -v /tmp:/tmp:rw -it $(IMAGE):$(TAG) bash
+	@docker run --name $(NAME) --privileged --rm -v /tmp:/tmp:rw -it $(IMAGE):$(TAG) bash
 
 build:  ## build new image
 	@docker build . -t $(IMAGE):$(TAG)
