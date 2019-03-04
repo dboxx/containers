@@ -1,4 +1,4 @@
-TAG = v5.3
+TAG = v5.4
 NAME = glusterfs
 IMAGE = dboxx/glusterfs
 
