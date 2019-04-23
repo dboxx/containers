@@ -1,7 +1,7 @@
 FROM debian:buster-slim
 
-ENV VERSION "5"
-ENV RELEASE "5.5"
+ENV VERSION "6"
+ENV RELEASE "6.0"
 ENV DEBIAN_VERSION "buster"
 ENV GLUSTER_APT_KEY "https://download.gluster.org/pub/gluster/glusterfs/$VERSION/rsa.pub"
 ENV GLUSTER_APT_SOURCE "https://download.gluster.org/pub/gluster/glusterfs/$VERSION/$RELEASE/Debian/$DEBIAN_VERSION/amd64/apt"
