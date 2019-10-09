@@ -1,6 +1,6 @@
 TAG = v1.1
 NAME = htop
-IMAGE = dboxx/htop
+IMAGE = dboxx/$(NAME)
 
 # Colors
 COLNO=\033[0m
@@ -10,7 +10,7 @@ COLMENU=\033[36m
 
 .PHONY: help pull push run build latest
 
-help:   ## show list
+help:   ## show help
 	@echo "Git: https://github.com/dboxx/containers"
 	@echo "Hub: https://hub.docker.com/r/$(IMAGE)"
 	@echo " > docker pull $(IMAGE)"

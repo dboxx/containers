@@ -6,7 +6,7 @@ RUN apk update \
 
 COPY htoprc /etc/htoprc
 
-ENV PATH "/bin:/usr/bin"
+ENV PATH "/usr/bin"
 
 WORKDIR /
 
