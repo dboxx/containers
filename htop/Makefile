@@ -1,4 +1,4 @@
-TAG = v1.0
+TAG = v1.1
 NAME = htop
 IMAGE = dboxx/htop
 
