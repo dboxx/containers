@@ -1,4 +1,4 @@
-FROM dboxx/debian
+FROM dboxx/debian:v10.1
 
 # GlusterFS configuration
 ENV GFS_VERSION="6"
