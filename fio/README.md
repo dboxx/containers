@@ -1,6 +1,4 @@
-# fio
-flexible I/O tester
----
+# fio - flexible I/O tester
 
 ## Usage
 ```
