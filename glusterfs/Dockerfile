@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND "noninteractive"
 
 # GlusterFS configuration
 ENV GFS_VERSION "6"
-ENV GFS_RELEASE "6.1"
+ENV GFS_RELEASE "6.5"
 
 # GlusterFS APT configuration
 ENV GFS_APT_URL "https://download.gluster.org/pub/gluster/glusterfs"

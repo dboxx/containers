@@ -1,6 +1,6 @@
-TAG = v6.1
+TAG = v6.5
 NAME = glusterfs
-IMAGE = dboxx/glusterfs
+IMAGE = dboxx/$(NAME)
 
 # Colors
 COLNO=\033[0m
