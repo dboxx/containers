@@ -1,4 +1,4 @@
-TAG = v6.5
+TAG = v7.0
 NAME = glusterfs
 IMAGE = dboxx/$(NAME)
 
@@ -14,7 +14,7 @@ help:   ## show list
 	@echo "Git: https://github.com/dboxx/containers"
 	@echo "Hub: https://hub.docker.com/r/$(IMAGE)"
 	@echo " > docker pull $(IMAGE)"
-	@echo " > docker run --name $(NAME) --privileged --rm -v /tmp:/tmp:rw -it $(IMAGE) bash"
+	@echo " > docker run --name $(NAME) --privileged --rm -it $(IMAGE)"
 	@echo "-----"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "$(COLMENU)%-10s$(COLNO) %s\n", $$1, $$2}'
 
@@ -25,7 +25,7 @@ push:   ## push image
 	@docker push $(IMAGE):$(TAG)
 
 run:    ## run image
-	@docker run --name $(NAME) --privileged --rm -v /tmp:/tmp:rw -it $(IMAGE):$(TAG) bash
+	@docker run --name $(NAME) --privileged --rm -it $(IMAGE):$(TAG)
 
 build:  ## build new image
 	@docker build . -t $(IMAGE):$(TAG)

@@ -1,8 +1,8 @@
 FROM dboxx/debian:v10.1
 
 # GlusterFS configuration
-ENV GFS_VERSION="6"
-ENV GFS_RELEASE="6.5"
+ENV GFS_VERSION="7"
+ENV GFS_RELEASE="7.0"
 
 # GlusterFS APT configuration
 ENV GFS_APT_URL="https://download.gluster.org/pub/gluster/glusterfs"
