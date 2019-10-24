@@ -24,7 +24,7 @@ push:   ## push image
 	@docker push $(IMAGE):$(TAG)
 
 run:    ## run image
-	@docker run --name $(NAME) --privileged --rm -it $(IMAGE):$(TAG)
+	@docker run --name $(NAME) --net=host --pid=host --privileged --rm -it $(IMAGE):$(TAG)
 
 build:  ## build new image
 	@docker build . -t $(IMAGE):$(TAG)
