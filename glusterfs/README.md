@@ -2,11 +2,6 @@
 
 ## Volume creation
 
-Run glusterd
-```
-glusterd
-```
-
 Create some directory for gluster volume
 ```
 mkdir /tmp/test-vol

@@ -1,8 +1,8 @@
-FROM dboxx/debian:v10.1
+FROM dboxx/systemd:v241.7
 
 # GlusterFS configuration
 ENV GFS_VERSION="7"
-ENV GFS_RELEASE="7.0"
+ENV GFS_RELEASE="${GFS_VERSION}.0"
 
 # GlusterFS APT configuration
 ENV GFS_APT_URL="https://download.gluster.org/pub/gluster/glusterfs"
@@ -15,7 +15,10 @@ RUN curl -sSk "${GFS_APT_KEY}" | apt-key add - \
  && echo "deb [arch=amd64] ${GFS_APT_SRC} ${DEBIAN_VERSION_NAME} main" > /etc/apt/sources.list.d/gluster.list \
  && cat /etc/apt/sources.list.d/gluster.list \
  && apt-get update -y \
- && apt-get install -yy -q glusterfs-server \
+ && apt-get install -yy \
+      glusterfs-common \
+      glusterfs-server \
+      glusterfs-client \
  && apt-get autoremove -y --purge \
  && apt-get autoclean -y \
  && apt-get clean -y \
@@ -23,3 +26,7 @@ RUN curl -sSk "${GFS_APT_KEY}" | apt-key add - \
  && rm -rf /var/lib/apt/lists/* /var/cache/* /usr/src/* /tmp/* /var/tmp/*
 
 ENV DEBIAN_FRONTEND=""
+
+RUN systemctl enable glusterd
+
+WORKDIR $HOME
