@@ -1,24 +1,37 @@
 FROM debian:10.1-slim
 
 ENV SHELL=/bin/bash
-ENV EDITOR=vim
 ENV PAGER=less
+ENV EDITOR=vim
+
+ENV HOME=/root
+#ENV TERM=xterm-color
 ENV PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin
 
 ENV DEBIAN_VERSION="10"
+ENV DEBIAN_RELEASE="${DEBIAN_VERSION}.1"
 ENV DEBIAN_VERSION_NAME="buster"
 
 ENV DEBIAN_FRONTEND="noninteractive"
 
 RUN apt-get update -y \
  && apt-get upgrade -y \
- && apt-get install -yy -q \
+ && apt-get install -yy --no-install-recommends \
       jq \
+      tar \
       vim \
+      git \
       bash \
       less \
       curl \
       vlan \
+      htop \
+      iftop \
+      # xterm \
+      patch \
+      screen \
+      iperf3 \
+      procps \
       telnet \
       gnupg2 \
       ethtool \
@@ -28,10 +41,10 @@ RUN apt-get update -y \
       ifenslave \
       net-tools \
       coreutils \
+      ssh-client \
       iputils-ping \
       bash-completion \
       ca-certificates \
-      command-not-found \
       apt-transport-https \
  && apt-get autoremove -y --purge \
  && apt-get autoclean -y \
@@ -41,6 +54,8 @@ RUN apt-get update -y \
 
 ENV DEBIAN_FRONTEND=""
 
-WORKDIR /
+COPY .bashrc       $HOME/.bashrc
+COPY .bash_aliases $HOME/.bash_aliases
+COPY .screenrc     $HOME/.screenrc
 
-ENTRYPOINT ["/bin/bash"]
+WORKDIR $HOME
