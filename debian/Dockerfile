@@ -5,7 +5,7 @@ ENV PAGER=less
 ENV EDITOR=vim
 
 ENV HOME=/root
-#ENV TERM=xterm-color
+ENV TERM=xterm-color
 ENV PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin
 
 ENV DEBIAN_VERSION="10"
@@ -54,8 +54,8 @@ RUN apt-get update -y \
 
 ENV DEBIAN_FRONTEND=""
 
-COPY .bashrc       $HOME/.bashrc
-COPY .bash_aliases $HOME/.bash_aliases
-COPY .screenrc     $HOME/.screenrc
+COPY profile/bashrc       $HOME/.bashrc
+COPY profile/bash_aliases $HOME/.bash_aliases
+COPY profile/screenrc     $HOME/.screenrc
 
 WORKDIR $HOME
