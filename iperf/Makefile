@@ -1,4 +1,4 @@
-TAG = v3.6
+TAG = v3.9
 NAME = iperf
 IMAGE = dboxx/$(NAME)
 
