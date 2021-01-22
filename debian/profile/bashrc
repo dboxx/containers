@@ -23,7 +23,7 @@ export LD_LIBRARY_PATH="${UL_LIB_HOME}:/usr/lib/x86_64-linux-gnu:/lib/x86_64-lin
 export LC_ALL="C"
 
 ## Language
-export LANG="en_US.UTF-8"
+export LANG="C.UTF-8"
 export LANGUAGE="en_US:en"
 
 ## Default terminal

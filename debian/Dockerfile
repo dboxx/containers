@@ -1,4 +1,6 @@
-FROM debian:10.1-slim
+FROM debian:10.7-slim
+
+ENV LANG=C.UTF-8
 
 ENV SHELL=/bin/bash
 ENV PAGER=less
@@ -9,7 +11,7 @@ ENV TERM=xterm-color
 ENV PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin
 
 ENV DEBIAN_VERSION="10"
-ENV DEBIAN_RELEASE="${DEBIAN_VERSION}.1"
+ENV DEBIAN_RELEASE="${DEBIAN_VERSION}.7"
 ENV DEBIAN_VERSION_NAME="buster"
 
 ENV DEBIAN_FRONTEND="noninteractive"
@@ -27,7 +29,6 @@ RUN apt-get update -y \
       vlan \
       htop \
       iftop \
-      # xterm \
       patch \
       screen \
       iperf3 \
