@@ -1,4 +1,4 @@
-FROM dboxx/glusterfs:v7.0
+FROM dboxx/glusterfs:v8.3
 
 ENV DEBIAN_FRONTEND="noninteractive"
 
@@ -12,6 +12,7 @@ RUN apt-get update -y \
       cmake \
       zlib1g \
       libtool \
+      valgrind \
       autoconf \
       automake \
       libc-dev \
@@ -45,11 +46,11 @@ RUN apt-get update -y \
  && apt-get autoclean -y \
  && apt-get clean -y \
  && apt-get check -y \
- && mkdir -p /etc/target /usr/lib/systemd/system \
+ && mkdir -p /etc/target /usr/lib/systemd/system /usr/var/run \
  && rm -rf /var/lib/apt/lists/* /var/cache/* /usr/src/* /tmp/* /var/tmp/*
 
 WORKDIR /usr/src
-RUN git clone -b v0.4 https://github.com/gluster/gluster-block.git
+RUN git clone -b v0.5.1 https://github.com/gluster/gluster-block.git
 RUN git clone https://github.com/open-iscsi/tcmu-runner.git
 RUN git clone https://github.com/open-iscsi/targetcli-fb.git
 RUN git clone https://github.com/open-iscsi/rtslib-fb.git

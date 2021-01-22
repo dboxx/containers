@@ -1,6 +1,6 @@
-TAG = v0.4
-NAME = gluster-block
-IMAGE = dboxx/$(NAME)
+TAG=v0.5.1
+NAME=gluster-block
+IMAGE=dboxx/$(NAME)
 
 # Colors
 COLNO=\033[0m
