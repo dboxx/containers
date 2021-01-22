@@ -1,4 +1,4 @@
-TAG = v7.0
+TAG = v8.3
 NAME = glusterfs
 IMAGE = dboxx/$(NAME)
 

@@ -1,8 +1,8 @@
 FROM dboxx/systemd:v241.7
 
 # GlusterFS configuration
-ENV GFS_VERSION="7"
-ENV GFS_RELEASE="${GFS_VERSION}.0"
+ENV GFS_VERSION="8"
+ENV GFS_RELEASE="${GFS_VERSION}.3"
 
 # GlusterFS APT configuration
 ENV GFS_APT_URL="https://download.gluster.org/pub/gluster/glusterfs"
