@@ -8,7 +8,7 @@ COLERR=\033[31;01m
 COLWARN=\033[33;01m
 COLMENU=\033[36m
 
-.PHONY: help pull push run build latest
+.PHONY: help pull push run build latest clean
 
 help:   ## show list
 	@echo "Git: https://github.com/dboxx/containers"
@@ -33,3 +33,6 @@ build:  ## build new image
 latest: ## mark image as latest
 	@docker tag $(IMAGE):$(TAG) $(IMAGE):latest
 	@docker push $(IMAGE):latest
+
+clean:  ## remove image
+	@docker rmi $(IMAGE):$(TAG)
