@@ -1,4 +1,4 @@
-FROM dboxx/debian:v10.1
+FROM dboxx/debian:v10.7
 
 ENV DEBIAN_FRONTEND="noninteractive"
 
