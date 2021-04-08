@@ -1,4 +1,4 @@
-FROM debian:10.7-slim
+FROM debian:10.9-slim
 
 ENV LANG=C.UTF-8
 
