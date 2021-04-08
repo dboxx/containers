@@ -1,4 +1,4 @@
-FROM dboxx/debian:v10.7
+FROM dboxx/debian:v10.9
 
 ENV DEBIAN_FRONTEND="noninteractive"
 
@@ -15,7 +15,5 @@ RUN apt-get update -y \
  && rm -rf /var/lib/apt/lists/* /var/cache/* /usr/src/* /tmp/* /var/tmp/*
 
 ENV DEBIAN_FRONTEND=""
-
-WORKDIR $HOME
 
 CMD ["/sbin/init"]

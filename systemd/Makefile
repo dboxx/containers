@@ -1,46 +1,55 @@
-TAG = v241.7
-NAME = systemd
-IMAGE = dboxx/$(NAME)
+NAME  = systemd
+ORG   = dboxx
+TAG   = v241.7
+IMAGE = ${ORG}/${NAME}
 
 # Colors
-COLNO=\033[0m
-COLERR=\033[31;01m
-COLWARN=\033[33;01m
-COLMENU=\033[36m
+COLNO   = \033[0m
+COLERR  = \033[31;01m
+COLWARN = \033[33;01m
+COLMENU = \033[36m
 
-.PHONY: help pull push build latest start stop exec status clean
-
+.PHONY: help
 help:   ## show list
 	@echo "Git: https://github.com/dboxx/containers"
-	@echo "Hub: https://hub.docker.com/r/$(IMAGE)"
-	@echo " > docker pull $(IMAGE)"
+	@echo "Hub: https://hub.docker.com/r/${IMAGE}"
+	@echo " > docker pull ${IMAGE}"
 	@echo "-----"
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "$(COLMENU)%-10s$(COLNO) %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "${COLMENU}%-10s${COLNO} %s\n", $$1, $$2}'
 
+.PHONY: pull
 pull:    ## pull image
-	@docker pull $(IMAGE):$(TAG)
+	@docker pull ${IMAGE}:${TAG}
 
+.PHONY: push
 push:    ## push image
-	@docker push $(IMAGE):$(TAG)
+	@docker push ${IMAGE}:${TAG}
 
+.PHONY: build
 build:   ## build new image
-	@docker build . -t $(IMAGE):$(TAG)
+	@docker build . -t ${IMAGE}:${TAG}
 
+.PHONY: latest
 latest:  ## mark image as latest
-	@docker tag $(IMAGE):$(TAG) $(IMAGE):latest
-	@docker push $(IMAGE):latest
+	@docker tag ${IMAGE}:${TAG} ${IMAGE}:latest
+	@docker push ${IMAGE}:latest
 
+.PHONY: start
 start:   ## start container
-	@docker run --name $(NAME) --privileged -d --rm $(IMAGE):$(TAG)
+	@docker run --name ${NAME} --privileged -d --rm ${IMAGE}:${TAG}
 
+.PHONY: stop
 stop:    ## stop container
-	@docker stop $(NAME)
+	@docker stop ${NAME}
 
+.PHONY: exec
 exec:    ## exec command
-	@docker exec -it $(NAME) bash
+	@docker exec -it ${NAME} bash
 
+.PHONY: status
 status:  ## show container status
-	@docker ps -af name=$(NAME)
+	@docker ps -af name=${NAME}
 
+.PHONY: clean
 clean:   ## remove image
-	@docker rmi $(IMAGE):$(TAG)
+	@docker rmi ${IMAGE}:${TAG}
