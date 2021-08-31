@@ -1,0 +1,49 @@
+version: '3.1'
+
+volumes:
+  var-run-quagga:
+    driver: local
+    driver_opts:
+      type: "tmpfs"
+      device: "tmpfs"
+      o: "size=32m,uid=1000"
+
+services:
+  zebra:
+    container_name: zebra
+    image: dboxx/quagga:v1.2.4
+    restart: always
+    command: zebra
+    pid: host
+    network_mode: host
+      #    ports:
+      #      - 2601:2601
+    volumes:
+      - var-run-quagga:/var/run/quagga
+
+  bgpd:
+    container_name: bgpd
+    image: dboxx/quagga:v1.2.4
+    restart: always
+    command: bgpd
+    pid: host
+    network_mode: host
+      #    ports:
+      #      - 2605:2605
+    volumes:
+      - var-run-quagga:/var/run/quagga
+    depends_on:
+      - zebra
+
+  quagga:
+    container_name: quagga
+    image: dboxx/quagga:v1.2.4
+    restart: always
+    command: quagga
+    pid: host
+    network_mode: host
+    volumes:
+      - var-run-quagga:/var/run/quagga
+    depends_on:
+      - zebra
+      - bgpd
