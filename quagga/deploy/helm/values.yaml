@@ -1,0 +1,10 @@
+image:
+  repository: dboxx/quagga
+  tag: v1.2.4
+  pullPolicy: IfNotPresent
+
+template:
+  selectorLabels:
+    app: quagga
+    category: bgp
+    component: network

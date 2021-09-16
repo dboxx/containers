@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{ toYaml .Values.template.selectorLabels | indent 4 | trim }}
+    chart: {{ template "chart" .}}
+spec:
+  selector:
+    {{ toYaml .Values.template.selectorLabels | indent 4 | trim }}
+  ports:
+  - name: zebra
+    port: 2601
+    targetPort: 2601
+  - name: bgpd
+    port: 2605
+    targetPort: 2605

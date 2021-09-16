@@ -13,7 +13,8 @@ help:   ## show help
 	@echo "Git: https://github.com/dboxx/containers"
 	@echo "Hub: https://hub.docker.com/r/${IMAGE}"
 	@echo " > docker pull ${IMAGE}"
-	@echo " > docker run --name ${NAME} --net=host --pid=host --privileged --rm -it ${IMAGE}"
+	@echo " > docker run --name ${NAME} --rm -it --net=host --pid=host --privileged ${IMAGE}"
+	@echo " > docker run --name ${NAME} --rm -it --cap-add NET_ADMIN --cap-add NET_BROADCAST -p 2605:2605 -p 179:179 ${IMAGE}"
 	@echo "-----"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' ${MAKEFILE_LIST} | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "${COLMENU}%-10s${COLNO} %s\n", $$1, $$2}'
 

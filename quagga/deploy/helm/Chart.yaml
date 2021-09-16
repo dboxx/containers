@@ -1,0 +1,16 @@
+name: quagga
+version: 0.0.1
+appVersion: 1.2.4
+description: Quagga is a network routing software
+keywords:
+  - quagga
+  - zebra
+  - vtysh
+  - bgpd
+  - bgp
+home: https://hub.docker.com/repository/docker/dboxx/quagga/general
+sources:
+  - https://github.com/dboxx/containers
+maintainers:
+  - name: Artem Teleshev
+    email: artem.teleshev@gmail.com

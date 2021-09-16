@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{ toYaml .Values.template.selectorLabels | indent 4 | trim }}
+    chart: {{ template "chart" .}}
+data:
+  zebra.conf: |+
+    hostname router
+    password zebra
+    enable password zebra
+    log stdout
+  bgpd.conf: |+
+    hostname bgpd
+    password zebra
+    enable password zebra
+    log stdout
