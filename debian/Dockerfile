@@ -1,4 +1,4 @@
-FROM debian:10.9-slim
+FROM debian:11.4-slim
 
 ENV LANG=C.UTF-8
 
@@ -10,8 +10,8 @@ ENV HOME=/root
 ENV TERM=xterm-color
 ENV PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin
 
-ENV DEBIAN_VERSION="10"
-ENV DEBIAN_RELEASE="${DEBIAN_VERSION}.7"
+ENV DEBIAN_VERSION="11"
+ENV DEBIAN_RELEASE="${DEBIAN_VERSION}.4"
 ENV DEBIAN_VERSION_NAME="buster"
 
 ENV DEBIAN_FRONTEND="noninteractive"
@@ -39,11 +39,14 @@ RUN apt-get update -y \
       locales \
       dnsutils \
       iproute2 \
+      iptables \
       ifenslave \
       net-tools \
       coreutils \
+      wireguard \
       ssh-client \
       iputils-ping \
+      wireguard-tools \
       bash-completion \
       ca-certificates \
       apt-transport-https \
