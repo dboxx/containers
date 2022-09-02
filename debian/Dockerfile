@@ -1,4 +1,30 @@
-FROM debian:11.4-slim
+# STAGE 1. Build go application.
+FROM golang:1.19.0-alpine3.16 as builder
+
+RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+
+RUN apk update \
+ && apk upgrade \
+ && apk add ca-certificates gcc make libc-dev musl-dev binutils git curl jq \
+ && rm -rf /var/cache/apk/*
+
+# golang
+ENV GOPATH=/go
+ENV GOROOT=/usr/local/go
+
+# app
+ENV APP_NAME=http-hello-test
+ENV APP_DIR=/usr/local/bin
+
+WORKDIR /tmp
+COPY http-hello-test/main.go main.go
+
+RUN go build -o ${APP_DIR}/${APP_NAME} \
+       -ldflags="-linkmode external -extldflags '-static'" \
+       ./main.go
+
+# STAGE 2. Copy go application from stage 1 and execute it.
+FROM debian:11.4-slim as application
 
 ENV LANG=C.UTF-8
 
@@ -12,7 +38,7 @@ ENV PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin
 
 ENV DEBIAN_VERSION="11"
 ENV DEBIAN_RELEASE="${DEBIAN_VERSION}.4"
-ENV DEBIAN_VERSION_NAME="buster"
+ENV DEBIAN_VERSION_NAME="bullseye"
 
 ENV DEBIAN_FRONTEND="noninteractive"
 
@@ -57,6 +83,12 @@ RUN apt-get update -y \
  && rm -rf /var/lib/apt/lists/* /var/cache/* /usr/src/* /tmp/* /var/tmp/*
 
 ENV DEBIAN_FRONTEND=""
+
+# app
+ENV APP_NAME=http-hello-test
+ENV APP_DIR=/usr/local/bin
+ENV APP_BIN=${APP_DIR}/${APP_NAME}
+COPY --from=builder ${APP_BIN} ${APP_BIN}
 
 COPY profile/bashrc       $HOME/.bashrc
 COPY profile/bash_aliases $HOME/.bash_aliases
