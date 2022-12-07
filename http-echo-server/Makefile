@@ -1,6 +1,6 @@
 NAME  = http-echo-server
 ORG   = dboxx
-TAG   = v1.0
+TAG   = v1.1
 REPO  = docker.io
 IMAGE = ${ORG}/${NAME}
 

@@ -1,5 +1,5 @@
 # STAGE 1. Build go application.
-FROM golang:1.19.1-alpine3.16 as builder
+FROM golang:1.19.4-alpine3.16 as builder
 
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 RUN apk add --update --no-cache ca-certificates gcc make binutils libc-dev musl-dev
