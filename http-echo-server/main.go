@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"os"
 	"sync"
@@ -10,7 +12,7 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/", hello)
+	http.HandleFunc("/", commonHandler)
 
 	var wg sync.WaitGroup
 
@@ -59,6 +61,46 @@ func runHTTPClient(rawURL string) {
 	}
 }
 
-func hello(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hello", r.URL.Path[1:])
+type Response struct {
+	Server Server `json:"server"`
+	Client Client `json:"client"`
+}
+
+type Server struct {
+	Addrs []string `json:"addrs,omitempty"`
+}
+
+type Client struct {
+	Request       string `json:"request,omitempty"`
+	RemoteAddr    string `json:"remote-addr,omitempty"`
+	XRealIP       string `json:"x-real-ip,omitempty"`
+	XForwardedFor string `json:"x-forwarded-for,omitempty"`
+}
+
+func commonHandler(w http.ResponseWriter, r *http.Request) {
+	rs := &Response{}
+
+	// get list of available addresses
+	addrs, err := net.InterfaceAddrs()
+	if err == nil {
+		for _, addr := range addrs {
+			if ipnet, ok := addr.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+				// check if IPv4 or IPv6 is not nil
+				if ipnet.IP.To4() != nil || ipnet.IP.To16 != nil {
+					// print available addresses
+					rs.Server.Addrs = append(rs.Server.Addrs, ipnet.IP.String())
+				}
+			}
+		}
+	}
+
+	rs.Client.Request = r.URL.Path[1:]
+	rs.Client.RemoteAddr, _, _ = net.SplitHostPort(r.RemoteAddr)
+	if rs.Client.RemoteAddr == "" {
+		rs.Client.RemoteAddr = "127.0.0.1"
+	}
+	rs.Client.XRealIP = r.Header.Get("X-Real-Ip")
+	rs.Client.XForwardedFor = r.Header.Get("X-Forwarded-For")
+
+	json.NewEncoder(w).Encode(rs)
 }

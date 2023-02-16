@@ -1,5 +1,5 @@
 # STAGE 1. Build go application.
-FROM golang:1.19.4-alpine3.16 as builder
+FROM golang:1.20.1-alpine3.17 as builder
 
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 RUN apk add --update --no-cache ca-certificates gcc make binutils libc-dev musl-dev
@@ -28,7 +28,7 @@ RUN GOOS=linux GOARCH=arm64 go build -o ${APP_NAME}-arm64 ./main.go
 RUN GOOS=linux GOARCH=386 go build -o ${APP_NAME}-386 ./main.go
 
 # STAGE 2. Copy go application from stage 1 and execute it.
-FROM alpine:3.16 as application
+FROM alpine:3.17 as application
 
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 RUN apk add --update --no-cache ca-certificates curl jq
