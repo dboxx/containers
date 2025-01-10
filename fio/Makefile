@@ -1,35 +1,57 @@
-TAG   ?= v3.27
-NAME  ?= fio
-IMAGE ?= dboxx/${NAME}
+NAME  = fio
+ORG   = dboxx
+TAG   = v3.38
+REPO  = docker.io
+IMAGE = ${ORG}/${NAME}
+
+# Container Runtimes: [docker|podman]
+PODMAN_VERSION = $(shell podman --version 2>/dev/null)
+DOCKER_VERSION = $(shell docker --version 2>/dev/null)
+
+ifdef PODMAN_VERSION
+    RUNTIME = podman
+else ifdef DOCKER_VERSION
+    RUNTIME = docker
+else
+    $(error [ ERROR ] container runtime can't be detected)
+endif
 
 # Colors
-COLNO=\033[0m
-COLERR=\033[31;01m
-COLWARN=\033[33;01m
-COLMENU=\033[36m
+COLNO   = \033[0m
+COLERR  = \033[31;01m
+COLWARN = \033[33;01m
+COLMENU = \033[36m
 
-.PHONY: help pull push run build latest
-
+.PHONY: help
 help:   ## show help
 	@echo "Git: https://github.com/dboxx/containers"
 	@echo "Hub: https://hub.docker.com/r/${IMAGE}"
-	@echo " > docker pull ${IMAGE}"
-	@echo " > docker run --name ${NAME} --net=host --pid=host --privileged --rm -it ${IMAGE}"
+	@echo " > ${RUNTIME} pull ${IMAGE}"
+	@echo " > ${RUNTIME} run --name ${NAME} --net=host --pid=host --privileged --rm -it ${IMAGE}"
 	@echo "-----"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' ${MAKEFILE_LIST} | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "${COLMENU}%-10s${COLNO} %s\n", $$1, $$2}'
 
+.PHONY: pull
 pull:   ## pull image
-	@docker pull ${IMAGE}:${TAG}
+	${RUNTIME} pull ${REPO}/${IMAGE}:${TAG}
 
+.PHONY: push
 push:   ## push image
-	@docker push ${IMAGE}:${TAG}
+	${RUNTIME} push ${REPO}/${IMAGE}:${TAG}
 
+.PHONY: run
 run:    ## run image
-	@docker run --name ${NAME} --net=host --pid=host --privileged --rm -it ${IMAGE}:${TAG}
+	${RUNTIME} run --name ${NAME} --net=host --pid=host --privileged --rm -it ${REPO}/${IMAGE}:${TAG} fio --help
 
+.PHONY: build
 build:  ## build new image
-	@docker build . -t ${IMAGE}:${TAG}
+	${RUNTIME} build --arch=amd64 -t ${REPO}/${IMAGE}:${TAG} .
 
+.PHONY: latest
 latest: ## mark image as latest
-	@docker tag ${IMAGE}:${TAG} ${IMAGE}:latest
-	@docker push ${IMAGE}:latest
+	${RUNTIME} tag ${REPO}/${IMAGE}:${TAG} ${REPO}/${IMAGE}:latest
+	${RUNTIME} push ${REPO}/${IMAGE}:latest
+
+.PHONY: clean
+clean:  ## remove image
+	${RUNTIME} rmi ${REPO}/${IMAGE}:${TAG}
